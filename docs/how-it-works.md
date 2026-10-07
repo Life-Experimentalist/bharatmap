@@ -47,7 +47,10 @@ looks for gaps:
   drawn line and another basemap line;
 * an end of a drawn line that touches no border.
 
-Zero of both at every zoom means the border has no break. The check does not look at whether a leftover
+Zero of both at every zoom means the border has no break. Results for 0.1.0: zoom 1 to 10 report zero. Zoom 11
+reports 3 ends near the Bhutan junction (0.15 to 0.6 km from the drawn line) and zoom 12 reports one end 60 m
+from it, in Gilgit; looking at the map at those zooms shows no stub or break, so they are tile-edge pieces
+and not visible gaps. Zoom 13 and above is checked by eye only. The check does not look at whether a leftover
 basemap line runs parallel to a drawn one, so also look at the map: `examples/maplibre.html` is a page
 for that.
 
