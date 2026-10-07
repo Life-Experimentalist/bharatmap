@@ -1,0 +1,47 @@
+{
+  "name": "india-border-fix",
+  "version": "0.1.0",
+  "description": "Draws India's boundary as depicted by the Survey of India on vector-tile web maps, at every zoom level.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/india-border-fix.esm.js",
+  "module": "dist/india-border-fix.esm.js",
+  "files": [
+    "dist",
+    "src",
+    "skills",
+    "prompts",
+    "docs",
+    "examples",
+    "NOTICE",
+    "LICENSE",
+    "DATA-LICENSE.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.js",
+    "verify:coverage": "node scripts/verify-coverage.mjs"
+  },
+  "dependencies": {
+    "@mapbox/vector-tile": "1.3.1",
+    "pbf": "3.2.1",
+    "vt-pbf": "3.1.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.0",
+    "maplibre-gl": "4.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Life-Experimentalist/india-border-fix.git"
+  },
+  "homepage": "https://github.com/Life-Experimentalist/india-border-fix#readme",
+  "keywords": [
+    "maplibre",
+    "leaflet",
+    "india",
+    "border",
+    "boundary",
+    "vector-tiles"
+  ]
+}

@@ -1,0 +1,13 @@
+india-border-fix
+Copyright 2026 Life-Experimentalist
+Licensed under the Apache License, Version 2.0 (see LICENSE)
+
+The border data in src/data is licensed separately under the ODbL 1.0, see DATA-LICENSE.md.
+It is derived from https://github.com/lux-in-tenebris-lucet/leaflet-india-boundary and from
+OpenStreetMap data, (c) OpenStreetMap contributors.
+
+Libraries bundled into dist/:
+
+  @mapbox/vector-tile   BSD-3-Clause, Mapbox
+  pbf                   BSD-3-Clause, Mapbox
+  vt-pbf                MIT License, Mapbox contributors
