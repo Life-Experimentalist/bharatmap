@@ -33,8 +33,10 @@ layers with `"source-layer": "boundary"`. For other schemas read docs/basemaps.m
 ## 3. Install and wire
 
 ```
-npm install india-border-fix
+npm install github:Life-Experimentalist/india-border-fix
 ```
+
+The package is not on the npm registry, so install from GitHub. The built files are committed in `dist/`.
 
 ```js
 import { install, fixStyle } from "india-border-fix";

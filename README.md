@@ -20,6 +20,12 @@ No server, no key, no change to your tile provider. Code is Apache-2.0. The bord
 
 ## Use it (MapLibre GL JS)
 
+It is not on the npm registry yet. Install it from GitHub (the built files are in the repo):
+
+```
+npm install github:Life-Experimentalist/india-border-fix
+```
+
 ```js
 import maplibregl from "maplibre-gl";
 import { install, fixStyle } from "india-border-fix";
