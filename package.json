@@ -1,18 +1,33 @@
 {
-  "name": "india-border-fix",
-  "version": "0.1.0",
-  "description": "Draws India's boundary as depicted by the Survey of India on vector-tile web maps, at every zoom level.",
+  "name": "bharatmap",
+  "version": "0.2.0",
+  "description": "Correct India map borders on web maps: draws Kashmir, Ladakh and Arunachal Pradesh as the Survey of India shows them. One line for MapLibre GL, also Leaflet, OpenLayers, deck.gl and a tile proxy for anything else.",
   "license": "Apache-2.0",
   "type": "module",
-  "main": "dist/india-border-fix.esm.js",
-  "module": "dist/india-border-fix.esm.js",
+  "main": "dist/bharatmap.esm.js",
+  "module": "dist/bharatmap.esm.js",
+  "types": "index.d.ts",
+  "jsdelivr": "dist/bharatmap.iife.js",
+  "unpkg": "dist/bharatmap.iife.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/bharatmap.esm.js",
+      "default": "./dist/bharatmap.esm.js"
+    },
+    "./iife": "./dist/bharatmap.iife.js",
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist",
     "src",
+    "index.d.ts",
     "skills",
     "prompts",
     "docs",
     "examples",
+    "llms.txt",
     "NOTICE",
     "LICENSE",
     "DATA-LICENSE.md"
@@ -20,7 +35,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test test/*.test.js",
-    "verify:coverage": "node scripts/verify-coverage.mjs"
+    "verify:coverage": "node scripts/verify-coverage.mjs",
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
     "@mapbox/vector-tile": "1.3.1",
@@ -33,15 +49,37 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Life-Experimentalist/india-border-fix.git"
+    "url": "git+https://github.com/Life-Experimentalist/bharatmap.git"
   },
-  "homepage": "https://github.com/Life-Experimentalist/india-border-fix#readme",
+  "homepage": "https://life-experimentalist.github.io/bharatmap/",
+  "bugs": {
+    "url": "https://github.com/Life-Experimentalist/bharatmap/issues"
+  },
   "keywords": [
-    "maplibre",
-    "leaflet",
     "india",
-    "border",
-    "boundary",
-    "vector-tiles"
+    "india-map",
+    "india-border",
+    "india-boundary",
+    "correct-india-map",
+    "survey-of-india",
+    "kashmir",
+    "jammu-and-kashmir",
+    "ladakh",
+    "arunachal-pradesh",
+    "aksai-chin",
+    "gilgit-baltistan",
+    "line-of-control",
+    "disputed-boundary",
+    "maplibre",
+    "maplibre-gl",
+    "leaflet",
+    "openlayers",
+    "deck-gl",
+    "vector-tiles",
+    "openmaptiles",
+    "mvt",
+    "carto",
+    "openfreemap",
+    "bharat"
   ]
 }

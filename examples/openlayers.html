@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bharatmap, OpenLayers example</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.3.1/ol.css">
+<style>html, body, #map { margin: 0; height: 100%; }</style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://cdn.jsdelivr.net/npm/ol@10.3.1/dist/ol.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ol-mapbox-style@12.4.1/dist/olms.js"></script>
+<script src="../dist/bharatmap.iife.js"></script>
+<script>
+  // OpenLayers loads tiles itself, so the tile URLs stay as they are (protocol: false) and each vector
+  // tile source gets BharatMap.olTileLoadFunction. The replacement lines arrive as a GeoJSON layer.
+  const map = new ol.Map({ target: "map", view: new ol.View({ center: ol.proj.fromLonLat([78, 22]), zoom: 4 }) });
+  BharatMap.fixStyle("https://basemaps.cartocdn.com/gl/positron-gl-style/style.json", { protocol: false })
+    .then((style) => olms.apply(map, style))
+    .then(() => {
+      map.getAllLayers().forEach((layer) => {
+        const source = layer.getSource && layer.getSource();
+        if (source instanceof ol.source.VectorTile) {
+          source.setTileLoadFunction(BharatMap.olTileLoadFunction);
+          source.refresh();
+        }
+      });
+    });
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Prompt: integrate india-border-fix into my map
+# Prompt: integrate bharatmap into my map
 
 Paste this into any coding assistant, with your project open.
 
@@ -6,17 +6,19 @@ Paste this into any coding assistant, with your project open.
 
 My web map shows India's borders the way the OpenStreetMap-based basemap does (LAC, LoC and the China
 side of Arunachal Pradesh in the wrong place, sometimes as stray lines at world zoom). I want India's
-boundary as the Survey of India depicts it. Use the `india-border-fix` module
-(https://github.com/Life-Experimentalist/india-border-fix) to do that. Work like this:
+boundary as the Survey of India depicts it. Use the `bharatmap` module
+(https://github.com/Life-Experimentalist/bharatmap) to do that. Work like this:
 
-1. Find which map library and basemap the project uses. If it is MapLibre GL, or Leaflet through
-   `maplibre-gl-leaflet`, continue. If it is Leaflet with raster `.png` tiles, tell me the raster border
-   cannot be cut and ask whether to switch to a vector basemap. If it is anything else, tell me and stop.
+1. Find which map library and basemap the project uses. If it is MapLibre GL (also through deck.gl or
+   react-map-gl), Leaflet through `maplibre-gl-leaflet`, or OpenLayers with ol-mapbox-style, continue. If
+   it is Mapbox GL JS, use the `tileProxy` fetch handler from the README. If it is Leaflet with raster
+   `.png` tiles, tell me the raster border cannot be cut and ask whether to switch to a vector basemap.
+   For Google Maps or Apple Maps, tell me it is not possible and stop.
 2. Check the basemap is an OpenMapTiles-schema vector style (layers with `"source-layer": "boundary"`).
    If not, read docs/basemaps.md in the module and tell me what the profile would need.
-3. `npm install github:Life-Experimentalist/india-border-fix` (not on the npm registry), call `install(maplibregl)` once before the map is created, and pass
-   every style the app uses (including each theme and every `setStyle` call) through
-   `await fixStyle(style)`. Change as little of the existing code as you can.
+3. `npm install bharatmap`. For MapLibre, call `await fixMap(maplibregl, map)` once after creating the
+   map; it covers every later `setStyle` too. For the other libraries follow the README section for that
+   library. Change as little of the existing code as you can.
 4. Run the app and look at the map at zoom 2, 3, 5, 7, 9 and 12, over Ladakh and Kashmir, Arunachal
    Pradesh, and where the boundary meets Himachal Pradesh and Bhutan, in light and dark themes. There must
    be one continuous Indian boundary, no stray lines, and the Myanmar and Bhutan borders must still be

@@ -1,0 +1,32 @@
+# bharatmap
+
+> JavaScript library that makes web maps draw India's boundary as the Survey of India depicts it:
+> Jammu and Kashmir, Ladakh (including Gilgit-Baltistan and Aksai Chin) and Arunachal Pradesh inside
+> India, with no stray LAC or LoC fragments at any zoom. Apache-2.0 code, ODbL border data.
+
+Use it when a web map built on an OpenStreetMap-based vector basemap (CARTO, OpenFreeMap, MapTiler,
+Stadia) shows India's borders wrongly. It rewrites vector tiles as they load, cutting the disputed country
+lines inside the affected regions, and draws India's boundary in their place with the basemap's own line
+style.
+
+Install: `npm install bharatmap`
+
+MapLibre GL JS, one call: `await fixMap(maplibregl, map)` (import { fixMap } from "bharatmap").
+Style first: `install(maplibregl); const style = await fixStyle(styleUrl);`
+
+Works with: MapLibre GL JS, Leaflet with a vector basemap (maplibre-gl-leaflet), OpenLayers
+(ol-mapbox-style), deck.gl and react-map-gl on MapLibre. Any other vector-tile client can use the
+`tileProxy` fetch handler. Not possible: raster tile basemaps (the border is baked into the image),
+Google Maps, Apple Maps.
+
+Needs an OpenMapTiles-schema basemap (a `boundary` layer with `admin_level` 2 and a `disputed` flag).
+
+Not legally authoritative: verify against the Survey of India before publishing.
+
+## Docs
+
+- [README](https://github.com/Life-Experimentalist/bharatmap/blob/main/README.md): install and per-library setup
+- [How it works](https://github.com/Life-Experimentalist/bharatmap/blob/main/docs/how-it-works.md)
+- [Basemaps and custom schemas](https://github.com/Life-Experimentalist/bharatmap/blob/main/docs/basemaps.md)
+- [Integration skill for coding assistants](https://github.com/Life-Experimentalist/bharatmap/blob/main/skills/bharatmap/SKILL.md)
+- [Integration prompt](https://github.com/Life-Experimentalist/bharatmap/blob/main/prompts/integrate.md)

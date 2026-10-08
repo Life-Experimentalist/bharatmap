@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>india-border-fix, MapLibre example</title>
+<title>bharatmap, MapLibre example</title>
 <link rel="stylesheet" href="../node_modules/maplibre-gl/dist/maplibre-gl.css">
 <style>
   html, body, #map { margin: 0; height: 100%; }
@@ -24,14 +24,14 @@
 </div>
 <div id="map"></div>
 <script src="../node_modules/maplibre-gl/dist/maplibre-gl.js"></script>
-<script src="../dist/india-border-fix.iife.js"></script>
+<script src="../dist/bharatmap.iife.js"></script>
 <script>
-  IndiaBorderFix.install(maplibregl);
+  BharatMap.install(maplibregl);
   const map = new maplibregl.Map({ container: "map", style: { version: 8, sources: {}, layers: [] }, center: [78, 22], zoom: 3 });
   const url = (t) => `https://basemaps.cartocdn.com/gl/${t}-gl-style/style.json`;
   async function load() {
     const theme = document.getElementById("theme").value;
-    map.setStyle(document.getElementById("fix").checked ? await IndiaBorderFix.fixStyle(url(theme)) : url(theme));
+    map.setStyle(document.getElementById("fix").checked ? await BharatMap.fixStyle(url(theme)) : url(theme));
   }
   document.getElementById("theme").onchange = document.getElementById("fix").onchange = load;
   document.getElementById("view").onchange = (e) => { const [x, y, z] = e.target.value.split(",").map(Number); map.jumpTo({ center: [x, y], zoom: z }); };
