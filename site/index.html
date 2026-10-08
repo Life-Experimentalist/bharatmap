@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>bharatmap: correct India map borders for MapLibre, Leaflet and OpenLayers</title>
+<meta name="description" content="Open source library that makes web maps draw India's boundary as the Survey of India does: Kashmir, Ladakh and Arunachal Pradesh inside India, at every zoom. MapLibre, Leaflet, OpenLayers, deck.gl. npm install bharatmap.">
+<meta name="theme-color" content="#12203f">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://bharatmap.vkrishna04.me/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="bharatmap: correct India map borders for web maps">
+<meta property="og:description" content="Fix Kashmir, Ladakh and Arunachal Pradesh on OpenStreetMap-based vector basemaps. One call for MapLibre.">
+<meta property="og:url" content="https://bharatmap.vkrishna04.me/">
+<meta property="og:image" content="https://bharatmap.vkrishna04.me/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bharatmap.vkrishna04.me/og.png">
+<link rel="alternate" type="text/markdown" href="/skill.md" title="Integration instructions for AI assistants">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+<script src="/dist/bharatmap.iife.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"bharatmap","description":"JavaScript library that makes web maps draw India's boundary as the Survey of India depicts it.","codeRepository":"https://github.com/Life-Experimentalist/bharatmap","programmingLanguage":"JavaScript","license":"https://www.apache.org/licenses/LICENSE-2.0","url":"https://bharatmap.vkrishna04.me/","image":"https://bharatmap.vkrishna04.me/badge-512.png","runtimePlatform":"Web browser, Node.js","author":{"@type":"Organization","name":"Life-Experimentalist"}}
+</script>
+<script>
+  // Resolve the theme before first paint so a dark choice does not flash light.
+  // Kumo reads data-mode="dark" on <html>; the saved choice (light, dark or system) is kept under bharatmap-theme.
+  (function () {
+    var dark = false;
+    try {
+      var t = localStorage.getItem("bharatmap-theme");
+      dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } catch (e) {}
+    if (dark) document.documentElement.setAttribute("data-mode", "dark");
+  })();
+</script>
+</head>
+<body>
+<div id="root"><!--app-html--></div>
+<script type="module" src="/src/entry-client.jsx"></script>
+</body>
+</html>

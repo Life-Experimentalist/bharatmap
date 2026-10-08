@@ -25,7 +25,7 @@
     "index.d.ts",
     "skills",
     "prompts",
-    "docs",
+    "docs/*.md",
     "examples",
     "llms.txt",
     "LICENSE",
