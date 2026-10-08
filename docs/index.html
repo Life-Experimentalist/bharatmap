@@ -6,15 +6,22 @@
 <title>bharatmap: correct India map borders for MapLibre, Leaflet and OpenLayers</title>
 <meta name="description" content="Open source library that makes web maps draw India's boundary as the Survey of India does: Kashmir, Ladakh and Arunachal Pradesh inside India, at every zoom. MapLibre, Leaflet, OpenLayers, deck.gl. npm install bharatmap.">
 <link rel="canonical" href="https://bharatmap.vkrishna04.me/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="bharatmap: correct India map borders for web maps">
 <meta property="og:description" content="Fix Kashmir, Ladakh and Arunachal Pradesh on OpenStreetMap-based vector basemaps. One call for MapLibre.">
 <meta property="og:url" content="https://bharatmap.vkrishna04.me/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://bharatmap.vkrishna04.me/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bharatmap.vkrishna04.me/og.png">
 <link rel="alternate" type="text/markdown" href="/skill.md" title="Integration instructions for AI assistants">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"bharatmap","description":"JavaScript library that makes web maps draw India's boundary as the Survey of India depicts it.","codeRepository":"https://github.com/Life-Experimentalist/bharatmap","programmingLanguage":"JavaScript","license":"https://www.apache.org/licenses/LICENSE-2.0","url":"https://bharatmap.vkrishna04.me/","runtimePlatform":"Web browser, Node.js","author":{"@type":"Organization","name":"Life-Experimentalist"}}
+{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"bharatmap","description":"JavaScript library that makes web maps draw India's boundary as the Survey of India depicts it.","codeRepository":"https://github.com/Life-Experimentalist/bharatmap","programmingLanguage":"JavaScript","license":"https://www.apache.org/licenses/LICENSE-2.0","url":"https://bharatmap.vkrishna04.me/","image":"https://bharatmap.vkrishna04.me/badge-512.png","runtimePlatform":"Web browser, Node.js","author":{"@type":"Organization","name":"Life-Experimentalist"}}
 </script>
 <style>
 :root { --bg:#fbfaf7; --fg:#1d1d1b; --muted:#5d5d57; --line:#dcdad2; --accent:#b4540a; --code:#f0eee8; }
@@ -38,11 +45,16 @@ pre code { padding:0; background:none; }
 table { border-collapse:collapse; width:100%; font-size:.92rem; }
 th, td { text-align:left; padding:.45rem .6rem; border-bottom:1px solid var(--line); vertical-align:top; }
 nav a { margin-right:1rem; }
+.brand { display:block; height:56px; margin:0 0 1.25rem; }
+.brand.dark { display:none; }
+@media (prefers-color-scheme: dark) { .brand.light { display:none; } .brand.dark { display:block; } }
 </style>
 </head>
 <body>
 <main>
 <nav><a href="https://github.com/Life-Experimentalist/bharatmap">GitHub</a><a href="https://www.npmjs.com/package/bharatmap">npm</a><a href="/skill.md">skill.md for AI assistants</a><a href="/llms.txt">llms.txt</a></nav>
+<img class="brand light" src="logo.svg" alt="bharatmap">
+<img class="brand dark" src="logo-dark.svg" alt="bharatmap">
 <h1>Correct India map borders for web maps</h1>
 <p>bharatmap makes a web map draw India's boundary the way the Survey of India does: Jammu and Kashmir, Ladakh (with Gilgit-Baltistan and Aksai Chin) and Arunachal Pradesh inside India, with no stray Line of Actual Control or Line of Control fragments, at every zoom level. No runtime dependencies, Apache-2.0.</p>
 <pre><code>npm install bharatmap</code></pre>

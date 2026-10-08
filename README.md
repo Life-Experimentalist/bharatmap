@@ -1,3 +1,5 @@
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg"><img src="docs/logo.svg" alt="bharatmap" height="72"></picture></p>
+
 # bharatmap: correct India map borders for web maps
 
 bharatmap makes a web map draw India's boundary the way the Survey of India does: Jammu and Kashmir,
