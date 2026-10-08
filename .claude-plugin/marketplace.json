@@ -1,0 +1,11 @@
+{
+  "name": "bharatmap",
+  "owner": { "name": "Life-Experimentalist" },
+  "plugins": [
+    {
+      "name": "bharatmap",
+      "source": "./",
+      "description": "Fix India's borders on web maps per the Survey of India. Adds the bharatmap integration skill."
+    }
+  ]
+}

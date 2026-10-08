@@ -1,0 +1,10 @@
+{
+  "name": "bharatmap",
+  "description": "Teaches Claude Code to fix India's borders (Kashmir, Ladakh, Arunachal Pradesh, per the Survey of India) on MapLibre, Leaflet, OpenLayers and deck.gl maps using the bharatmap npm package.",
+  "version": "0.2.0",
+  "author": { "name": "Life-Experimentalist" },
+  "homepage": "https://bharatmap.vkrishna04.me",
+  "repository": "https://github.com/Life-Experimentalist/bharatmap",
+  "license": "Apache-2.0",
+  "keywords": ["india", "maps", "maplibre", "leaflet", "openlayers", "borders"]
+}

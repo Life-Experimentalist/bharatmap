@@ -9,6 +9,8 @@ Actual Control or Line of Control fragments, at every zoom level. It works with 
 npm install bharatmap
 ```
 
+No runtime dependencies, about 40 kB gzipped, Apache-2.0.
+
 ## Why your map shows India wrongly
 
 Free basemaps (CARTO, OpenFreeMap, MapTiler, Stadia and others) are built from OpenStreetMap, whose
@@ -61,7 +63,8 @@ From a script tag, no bundler:
 | deck.gl, react-map-gl, Vue and Angular wrappers on MapLibre | same as MapLibre, on the map or style you pass in | same engine, not tested separately |
 | Mapbox GL JS, Tangram, QGIS, any other vector-tile client | `tileProxy`, a fetch handler you host ([examples/cloudflare-worker.js](examples/cloudflare-worker.js)) | unit tests only |
 | Leaflet with raster tiles | overlay only: `L.geoJSON(BharatMap.boundary)` | the raster's own line stays underneath |
-| Google Maps, Apple Maps | not possible | the vendor decides what these draw |
+| Google Maps | not needed | Google already draws India's borders per local depiction on its own |
+| Apple Maps | not possible | the vendor decides what it draws |
 
 A raster tile is a picture, so a border baked into it cannot be cut. Use a vector basemap.
 
@@ -138,6 +141,25 @@ against the Survey of India itself.
 **Can an AI assistant add it to my project?** Yes. [skills/bharatmap/SKILL.md](skills/bharatmap/SKILL.md)
 is a skill for Claude Code and similar tools, and [prompts/integrate.md](prompts/integrate.md) is the same
 instructions as a prompt for any assistant. [llms.txt](llms.txt) is a short summary for crawlers.
+
+## Let your AI assistant do it
+
+One command puts the instructions where your assistant looks (Claude Code, Cursor, Copilot, Windsurf,
+Gemini CLI, or AGENTS.md for the rest):
+
+```
+npx bharatmap init
+```
+
+Then ask: "fix the India borders on my map with bharatmap". Claude Code users can also install it as a plugin:
+
+```
+/plugin marketplace add Life-Experimentalist/bharatmap
+/plugin install bharatmap@bharatmap
+```
+
+Any assistant that can read a URL can be told: "follow https://bharatmap.vkrishna04.me/skill.md". That file
+is always the current version.
 
 ## Check it yourself
 

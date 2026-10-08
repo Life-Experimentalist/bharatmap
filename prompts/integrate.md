@@ -13,7 +13,7 @@ boundary as the Survey of India depicts it. Use the `bharatmap` module
    react-map-gl), Leaflet through `maplibre-gl-leaflet`, or OpenLayers with ol-mapbox-style, continue. If
    it is Mapbox GL JS, use the `tileProxy` fetch handler from the README. If it is Leaflet with raster
    `.png` tiles, tell me the raster border cannot be cut and ask whether to switch to a vector basemap.
-   For Google Maps or Apple Maps, tell me it is not possible and stop.
+   For Google Maps, tell me it needs nothing, as Google already corrects India's borders. For Apple Maps, tell me it is not possible and stop.
 2. Check the basemap is an OpenMapTiles-schema vector style (layers with `"source-layer": "boundary"`).
    If not, read docs/basemaps.md in the module and tell me what the profile would need.
 3. `npm install bharatmap`. For MapLibre, call `await fixMap(maplibregl, map)` once after creating the
