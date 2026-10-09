@@ -1,0 +1,38 @@
+{
+	"$schema": "https://vkrishna04.me/schemas/project-manifest.schema.json",
+	"manifestVersion": 2,
+	"tagline": "Correct India borders on web maps: MapLibre, Leaflet, OpenLayers, deck.gl.",
+	"summary": "A small zero-dependency JavaScript module that fixes how free vector basemaps draw India's borders. It rewrites each vector tile as it loads, cutting the disputed Kashmir, Ladakh and Arunachal Pradesh lines that OpenStreetMap-based styles draw and drawing the Survey of India boundary in their place, in the basemap's own line style. It ships as an npm package with TypeScript types, a tile proxy for clients that cannot hook tile loading, a Claude Code plugin and a skill file so AI assistants can apply the fix to a project.",
+	"status": "active",
+	"icon": "SiNpm",
+	"readme": true,
+	"technologies": [
+		"JavaScript",
+		"TypeScript",
+		"MapLibre GL JS",
+		"Vector tiles",
+		"React",
+		"Vite"
+	],
+	"tags": [
+		"maps",
+		"india",
+		"maplibre",
+		"leaflet",
+		"openlayers",
+		"vector-tiles",
+		"npm"
+	],
+	"highlights": [
+		"Cuts the disputed border geometry inside each vector tile as it loads, which a style filter cannot do because the tile builder merges several borders into one line.",
+		"One function call for MapLibre, a style fix for Leaflet and OpenLayers, and a tile proxy for Mapbox GL JS, Tangram and QGIS. No server or API key needed.",
+		"About 40 kB gzipped with no runtime dependencies. Code is Apache-2.0, border data is ODbL.",
+		"The docs site is built with Cloudflare's Kumo UI and prerendered to static HTML, with a live before and after map slider in light and dark."
+	],
+	"links": {
+		"repo": "https://github.com/Life-Experimentalist/bharatmap",
+		"live": "https://bharatmap.vkrishna04.me/",
+		"package": "https://www.npmjs.com/package/bharatmap",
+		"docs": "https://bharatmap.vkrishna04.me/how-it-works.md"
+	}
+}
