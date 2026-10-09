@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Button, ClipboardText, Collapsible, LinkButton, Tabs } from "@cloudflare/kumo";
+import { ClipboardText, LinkButton, Tabs } from "@cloudflare/kumo";
 import { Desktop, GithubLogo, Moon, Sun } from "@phosphor-icons/react";
+import { Code } from "./Code.jsx";
 import { Compare } from "./Compare.jsx";
+import { Author, Badges, Stats } from "./Extras.jsx";
+import { FAQ } from "./faq.js";
 import { setTheme, useThemePref } from "./theme.js";
 
 const THEMES = [
@@ -29,22 +32,6 @@ function Header() {
         <LinkButton className="gh" href="https://github.com/Life-Experimentalist/bharatmap" variant="primary" size="sm" icon={GithubLogo}>GitHub</LinkButton>
       </div>
     </header>
-  );
-}
-
-// A code block with a copy button. Pass the text as a string so the copy matches what is shown.
-function Code({ children }) {
-  const [done, setDone] = useState(false);
-  const copy = () => {
-    const finish = () => { setDone(true); setTimeout(() => setDone(false), 1600); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(children).then(finish, finish);
-    else finish();
-  };
-  return (
-    <div className="code">
-      <pre><code>{children}</code></pre>
-      <Button className="copybtn" size="sm" variant="secondary" onClick={copy}>{done ? "Copied" : "Copy"}</Button>
-    </div>
   );
 }
 
@@ -286,33 +273,39 @@ function Why() {
   );
 }
 
-function Q({ q, children }) {
+// Answers carry `code` and [text](url) markup; turn it into elements.
+function Rich({ text }) {
+  return text.split(/(`[^`]*`|\[[^\]]*\]\([^)]*\))/).map((part, i) => {
+    if (part[0] === "`") return <code key={i}>{part.slice(1, -1)}</code>;
+    const link = part.match(/^\[([^\]]*)\]\(([^)]*)\)$/);
+    return link ? <a key={i} href={link[2]}>{link[1]}</a> : part;
+  });
+}
+
+// Native details elements: the answers are in the page HTML for readers, search engines and AI
+// crawlers alike, and they open without any script.
+function Q({ q, a }) {
   return (
-    <Collapsible.Root className="qa">
-      <Collapsible.Trigger className="qa-trigger">{q}</Collapsible.Trigger>
-      <Collapsible.Panel className="qa-panel">{children}</Collapsible.Panel>
-    </Collapsible.Root>
+    <details className="qa">
+      <summary className="qa-trigger">{q}</summary>
+      <div className="qa-panel"><p><Rich text={a} /></p></div>
+    </details>
   );
 }
 
 function Questions() {
+  const groups = [...new Set(FAQ.map((f) => f.group))];
   return (
     <section id="questions">
       <div className="wrap split">
         <header><h2>If something looks wrong, and other questions</h2></header>
         <div>
-          <h3 className="sub">Troubleshooting</h3>
-          <Q q="Nothing changed on my map"><p>Check three things. First, the basemap must be vector tiles. If your map uses <code>.png</code> or <code>.jpg</code> tiles the border is part of the picture and cannot be cut. Second, the style needs a <code>boundary</code> layer with <code>admin_level</code> 2, which is the OpenMapTiles schema. Look for <code>"source-layer": "boundary"</code> in the style JSON. Third, make sure the style you pass to the map is the one that came back from <code>fixStyle</code>, and that you waited for it.</p></Q>
-          <Q q="It is right until I switch between light and dark"><p>A new style replaces the fixed one. Use <code>fixMap(maplibregl, map)</code>, which fixes every later <code>setStyle</code> for you. If you use <code>fixStyle</code> instead, run every style you load through it, including the dark one.</p></Q>
-          <Q q="Where did the data credit go?"><p>bharatmap adds the border data attribution to the map's credits on its own. Keep the attribution control on the map and it stays there.</p></Q>
-          <Q q="I see a small gap at a high zoom"><p>The coverage check reports no gaps from zoom 1 to 10 and a few tile-edge pieces at zoom 11 and 12. Zoom 13 and above was checked by eye. If you find one, open an issue on GitHub with the zoom level and the coordinates, and it can be fixed in the module's region data.</p></Q>
-          <Q q="My basemap uses a different schema"><p>You can pass a profile that names the tile layer and says which lines to cut. The three parts are described in <a href="/basemaps.md">basemaps</a>, along with a command that checks a new basemap for gaps.</p></Q>
-          <h3 className="sub">Questions</h3>
-          <Q q="Is the line legally authoritative?"><p>No. It follows a published depiction of the Survey of India line, checked against OpenStreetMap where OpenStreetMap independently draws the same line. If you publish the map, verify the line against the Survey of India itself.</p></Q>
-          <Q q="Does it need a server or an API key?"><p>No. It runs in the browser. Only the optional tile proxy for Mapbox GL JS and similar clients needs hosting.</p></Q>
-          <Q q="Does it slow the map down?"><p>Tiles that do not touch the affected areas are returned untouched. The others take a few milliseconds each. The library is about 40 kB gzipped and has no runtime dependencies.</p></Q>
-          <Q q="What is the license?"><p>The code is Apache-2.0. The border data is ODbL 1.0, and its attribution is added to the map for you. Both are described in the repository.</p></Q>
-          <Q q="Does it work with TypeScript?"><p>Yes. Types ship with the package.</p></Q>
+          {groups.map((g) => (
+            <div className="qgroup" key={g}>
+              <h3 className="sub">{g}</h3>
+              {FAQ.filter((f) => f.group === g).map((f) => <Q key={f.q} q={f.q} a={f.a} />)}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -335,25 +328,32 @@ export function App() {
                 <LinkButton href="#guide" variant="secondary">Read the guide</LinkButton>
               </div>
               <p className="facts">About 40 kB gzipped. Apache-2.0. Works with MapLibre, Leaflet, OpenLayers and deck.gl.</p>
+              <Author />
             </div>
           </div>
           <Compare />
         </div>
+        <Stats />
         <Guide />
         <Assistants />
         <Libraries />
         <Why />
         <Questions />
+        <Badges />
       </main>
       <footer>
         <div className="wrap">
           <div>
+            <Author big />
             <p><strong style={{ color: "var(--ink)" }}>bharatmap</strong> is open source. Code under Apache-2.0, border data under ODbL 1.0.</p>
             <p>It follows a published depiction of the Survey of India boundary. It is not a legal authority. Verify before you publish.</p>
           </div>
           <ul>
             <li><a href="https://github.com/Life-Experimentalist/bharatmap">GitHub</a></li>
             <li><a href="https://www.npmjs.com/package/bharatmap">npm</a></li>
+            <li><a href="https://vkrishna04.me">vkrishna04.me</a></li>
+            <li><a href="/index.md">This page as Markdown</a></li>
+            <li><a href="/llms-full.txt">llms-full.txt</a></li>
             <li><a href="/skill.md">skill.md</a></li>
             <li><a href="/llms.txt">llms.txt</a></li>
             <li><a href="/how-it-works.md">How it works</a></li>

@@ -2,6 +2,17 @@
 
 # bharatmap: correct India map borders for web maps
 
+[![npm version](https://img.shields.io/npm/v/bharatmap?style=flat-square&color=000000&labelColor=737373)](https://www.npmjs.com/package/bharatmap)
+[![npm downloads per month](https://img.shields.io/npm/dm/bharatmap?style=flat-square&color=000000&labelColor=737373)](https://www.npmjs.com/package/bharatmap)
+[![GitHub stars](https://img.shields.io/github/stars/Life-Experimentalist/bharatmap?style=flat-square&color=000000&labelColor=737373)](https://github.com/Life-Experimentalist/bharatmap)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/bharatmap?style=flat-square&color=000000&labelColor=737373)](https://bundlephobia.com/package/bharatmap)
+[![Types included](https://img.shields.io/npm/types/bharatmap?style=flat-square&color=000000&labelColor=737373)](https://www.npmjs.com/package/bharatmap)
+[![License](https://img.shields.io/npm/l/bharatmap?style=flat-square&color=000000&labelColor=737373)](LICENSE)
+
+[![bharatmap: correct India borders on web maps](https://bharatmap.vkrishna04.me/og.png)](https://bharatmap.vkrishna04.me/)
+
+Site and live demo: https://bharatmap.vkrishna04.me/. Made by [VKrishna04](https://github.com/VKrishna04).
+
 bharatmap makes a web map draw India's boundary the way the Survey of India does: Jammu and Kashmir,
 Ladakh (with Gilgit-Baltistan and Aksai Chin) and Arunachal Pradesh inside India, with no stray Line of
 Actual Control or Line of Control fragments, at every zoom level. It works with MapLibre GL JS, Leaflet

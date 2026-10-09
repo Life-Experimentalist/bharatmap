@@ -1,0 +1,15 @@
+{
+  "name": "bharatmap",
+  "short_name": "bharatmap",
+  "description": "Correct India borders on web maps: MapLibre, Leaflet, OpenLayers, deck.gl.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/badge-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

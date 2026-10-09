@@ -1,0 +1,328 @@
+# bharatmap
+
+> JavaScript library that makes web maps draw India's boundary as the Survey of India depicts it:
+> Jammu and Kashmir, Ladakh (including Gilgit-Baltistan and Aksai Chin) and Arunachal Pradesh inside
+> India, with no stray LAC or LoC fragments at any zoom. Apache-2.0 code, ODbL border data.
+
+Use it when a web map built on an OpenStreetMap-based vector basemap (CARTO, OpenFreeMap, MapTiler,
+Stadia) shows India's borders wrongly. It rewrites vector tiles as they load, cutting the disputed country
+lines inside the affected regions, and draws India's boundary in their place with the basemap's own line
+style.
+
+Install: `npm install bharatmap`
+
+MapLibre GL JS, one call: `await fixMap(maplibregl, map)` (import { fixMap } from "bharatmap").
+Style first: `install(maplibregl); const style = await fixStyle(styleUrl);`
+
+Works with: MapLibre GL JS, Leaflet with a vector basemap (maplibre-gl-leaflet), OpenLayers
+(ol-mapbox-style), deck.gl and react-map-gl on MapLibre. Any other vector-tile client can use the
+`tileProxy` fetch handler. Not possible: raster tile basemaps (the border is baked into the image),
+Apple Maps. Google Maps needs nothing, it already corrects India's borders itself.
+
+Needs an OpenMapTiles-schema basemap (a `boundary` layer with `admin_level` 2 and a `disputed` flag).
+
+Not legally authoritative: verify against the Survey of India before publishing.
+
+## Docs
+
+- [README](https://github.com/Life-Experimentalist/bharatmap/blob/main/README.md): install and per-library setup
+- [How it works](https://github.com/Life-Experimentalist/bharatmap/blob/main/docs/how-it-works.md)
+- [Basemaps and custom schemas](https://github.com/Life-Experimentalist/bharatmap/blob/main/docs/basemaps.md)
+- [Integration skill for coding assistants](https://github.com/Life-Experimentalist/bharatmap/blob/main/skills/bharatmap/SKILL.md)
+- [Integration prompt](https://github.com/Life-Experimentalist/bharatmap/blob/main/prompts/integrate.md)
+- [Site](https://bharatmap.vkrishna04.me/): landing page with the per-library guide, live install counts and badges
+- [Everything in one file](https://bharatmap.vkrishna04.me/llms-full.txt): this file, the integration skill, how it works and the basemap guide
+- [Integration skill, always current](https://bharatmap.vkrishna04.me/skill.md)
+- [Page as Markdown](https://bharatmap.vkrishna04.me/index.md)
+- [npm package](https://www.npmjs.com/package/bharatmap)
+
+## About
+
+Author: [VKrishna04](https://github.com/VKrishna04). Repository: https://github.com/Life-Experimentalist/bharatmap.
+Code Apache-2.0, border data ODbL 1.0.
+
+
+---
+
+# Page content
+
+# bharatmap: correct India map borders for web maps
+
+bharatmap makes a web map draw India's boundary the way the Survey of India does: Jammu and Kashmir, Ladakh (with Gilgit-Baltistan and Aksai Chin) and Arunachal Pradesh inside India, with no stray Line of Actual Control or Line of Control fragments, at every zoom. It cuts the disputed border lines out of OpenStreetMap-based vector tiles as they load and draws India's boundary in their place. No server, no API key, no runtime dependencies, about 40 kB gzipped.
+
+- Install: `npm install bharatmap`
+- Works with: MapLibre GL JS, Leaflet (vector basemaps), OpenLayers, deck.gl, and a tile proxy for Mapbox GL JS and others.
+- Does not work with: raster tile basemaps (the border is part of the picture) and Apple Maps.
+- Licence: code Apache-2.0, border data ODbL 1.0.
+- Author: [VKrishna04](https://github.com/VKrishna04)
+- Source: https://github.com/Life-Experimentalist/bharatmap
+- Package: https://www.npmjs.com/package/bharatmap
+
+## MapLibre GL JS, one call
+
+```js
+import maplibregl from "maplibre-gl";
+import { fixMap } from "bharatmap";
+
+const map = new maplibregl.Map({ container: "map", style: STYLE_URL, center: [78, 22], zoom: 4 });
+await fixMap(maplibregl, map);
+```
+
+## For AI assistants
+
+Follow https://bharatmap.vkrishna04.me/skill.md to fix the India borders on a map. Short summary: https://bharatmap.vkrishna04.me/llms.txt. Everything in one file: https://bharatmap.vkrishna04.me/llms-full.txt.
+
+## Troubleshooting
+
+### Nothing changed on my map
+
+Check three things. First, the basemap must be vector tiles. If your map uses .png or .jpg tiles the border is part of the picture and cannot be cut. Second, the style needs a `boundary` layer with `admin_level` 2, which is the OpenMapTiles schema. Look for `"source-layer": "boundary"` in the style JSON. Third, make sure the style you pass to the map is the one that came back from `fixStyle`, and that you waited for it.
+
+### It is right until I switch between light and dark
+
+A new style replaces the fixed one. Use `fixMap(maplibregl, map)`, which fixes every later `setStyle` for you. If you use `fixStyle` instead, run every style you load through it, including the dark one.
+
+### Where did the data credit go?
+
+bharatmap adds the border data attribution to the map's credits on its own. Keep the attribution control on the map and it stays there.
+
+### I see a small gap at a high zoom
+
+The coverage check reports no gaps from zoom 1 to 10 and a few tile-edge pieces at zoom 11 and 12. Zoom 13 and above was checked by eye. If you find one, open an issue on GitHub with the zoom level and the coordinates, and it can be fixed in the module's region data.
+
+### My basemap uses a different schema
+
+You can pass a profile that names the tile layer and says which lines to cut. The three parts are described in [basemaps](/basemaps.md), along with a command that checks a new basemap for gaps.
+
+## Questions
+
+### Is the line legally authoritative?
+
+No. It follows a published depiction of the Survey of India line, checked against OpenStreetMap where OpenStreetMap independently draws the same line. If you publish the map, verify the line against the Survey of India itself.
+
+### Does it need a server or an API key?
+
+No. It runs in the browser. Only the optional tile proxy for Mapbox GL JS and similar clients needs hosting.
+
+### Does it slow the map down?
+
+Tiles that do not touch the affected areas are returned untouched. The others take a few milliseconds each. The library is about 40 kB gzipped and has no runtime dependencies.
+
+### What is the license?
+
+The code is Apache-2.0. The border data is ODbL 1.0, and its attribution is added to the map for you. Both are described in the repository.
+
+### Does it work with TypeScript?
+
+Yes. Types ship with the package.
+
+Not legally authoritative: verify against the Survey of India before publishing.
+
+
+---
+
+# Integration skill (skill.md)
+
+---
+name: bharatmap
+description: Use when a web map (MapLibre GL, Leaflet, OpenLayers, deck.gl on a vector basemap) shows India's borders wrongly, or when asked to draw India's boundary per the Survey of India, fix the Kashmir, Ladakh or Arunachal Pradesh borders, or integrate the bharatmap module into an existing map.
+---
+
+# Integrating bharatmap
+
+The module cuts the basemap's disputed country lines out of vector tiles as they load and adds India's
+boundary lines in their place. You wire it into the project's existing map code. Do not rewrite the
+map. Work in this order and stop to report if a step does not hold.
+
+## 1. Find out what the project uses
+
+Search the code for the map library and the basemap:
+
+* `maplibre-gl` / `maplibregl.Map`: MapLibre. Direct integration (`fixMap`).
+* `leaflet` with `maplibre-gl-leaflet` (`L.maplibreGL`): vector, works as MapLibre (`install` and `fixStyle`).
+* `leaflet` with plain `L.tileLayer("...png")`: raster. Cutting is impossible. Tell the user, offer a
+  vector basemap, and otherwise only overlay the lines (the raster's own line stays visible).
+* `ol` with `ol-mapbox-style`: `fixStyle(style, { protocol: false })`, then set `olTileLoadFunction` on
+  each vector tile source (see the README).
+* `deck.gl`, `react-map-gl`, Vue or Angular wrappers on a MapLibre base map: integrate at the MapLibre
+  style, not in deck.gl.
+* `mapbox-gl`: cannot intercept tile requests. Use `tileProxy` (a fetch handler to host, see
+  examples/cloudflare-worker.js) and point the style at it. Ask first. Mapbox's own styles have a
+  worldview setting that may already do what the user wants.
+* Google Maps: nothing to do, Google already draws India's borders per local depiction. Say so.
+* Apple Maps: not possible. Say so.
+
+Find the style: a URL string, an object, or a function that returns one per theme. Find where `setStyle`
+is called, since every style needs the fix.
+
+## 2. Check the basemap schema
+
+The basemap needs a `boundary` layer with `admin_level` 2, `maritime` and `disputed` properties
+(OpenMapTiles schema: CARTO, OpenFreeMap, MapTiler, Stadia). Confirm by looking at the style JSON for
+layers with `"source-layer": "boundary"`. For other schemas read docs/basemaps.md and use a custom profile.
+
+## 3. Install and wire
+
+```
+npm install bharatmap
+```
+
+MapLibre, one call (fixes the current style and every later `setStyle`, theme switches included):
+
+```js
+import { fixMap } from "bharatmap";
+await fixMap(maplibregl, map);
+```
+
+Or fix a style before the map exists:
+
+```js
+import { install, fixStyle } from "bharatmap";
+install(maplibregl);                    // once, before any map is created
+const style = await fixStyle(styleUrlOrObject);   // every style, including theme switches
+```
+
+Pass the result where the original style went. If the project hides a glow or outline layer, pass
+`{ skip: (layer) => layer.id === "..." }` for it rather than editing the module.
+
+Keep the data attribution: the module adds it as a source attribution, so do not strip the attribution
+control.
+
+## 4. Verify, at several zooms
+
+Do not report success from the code alone.
+
+1. `npm run verify:coverage` from the module repo (or against the project's tile URL with `--tiles`) must
+   report zero free ends at zoom 1 to 10.
+2. Open the app. Look at these views in each theme:
+   * Zoom 2 to 3, whole world: no stray dashed or solid line over Ladakh, Kashmir or Aksai Chin other
+     than the single Indian boundary.
+   * Zoom 5 to 7 over Arunachal Pradesh: one continuous border, and the Myanmar border and Bhutan border
+     still drawn.
+   * Zoom 9 to 12 at the points where the Indian boundary meets Himachal Pradesh and the Bhutan border:
+     no gaps, no doubled lines.
+3. Check the map credits show the data attribution.
+
+If you find a gap, note the zoom and the coordinates. Fixes belong in the module's `REGIONS`, not as
+workarounds in the app.
+
+## 5. Report
+
+State what you changed, which basemaps and zooms you checked, and any limit that applies (raster tiles,
+unsupported library, printing). Do not claim legal authority for the line.
+
+
+---
+
+# How it works (how-it-works.md)
+
+# How it works
+
+## Why a style filter is not enough
+
+A MapLibre filter decides per feature, and a vector tile does not hold one feature per border. The tile
+builder merges lines. At zoom 1 to 4 the basemap packs several different disputed borders into a single
+long line, and a filter such as "hide disputed lines inside this box" tests that whole merged line, so
+either all of it goes or none of it does. That is why a box filter leaves stray Line of Control and Line
+of Actual Control fragments at world zoom, and why a box that is big enough to catch them also removes
+real borders (Myanmar, Bhutan) from Arunachal Pradesh when you zoom in.
+
+So this module cuts the geometry itself.
+
+## The tile rewrite
+
+`install(maplibregl)` registers a tile protocol, `indiafix`. `fixStyle` points the basemap's vector source
+at it, so a tile URL becomes `indiafix://https://.../{z}/{x}/{y}.pbf`. When the map asks for a tile:
+
+1. Fetch the real tile, gunzip it if it is gzipped.
+2. Work out which removal regions touch this tile (`src/config.js`, `REGIONS`). Most tiles touch none and
+   are returned unchanged, with no decoding cost beyond a bounding-box test.
+3. Decode the `boundary` layer. For every feature that is a country line (`admin_level` 2), not at sea
+   (`maritime` 0) and flagged `disputed`, cut each line against the regions in tile pixel space and keep
+   only the parts outside.
+4. Where a cut leaves a new end close to the drawn line, extend it up to the drawn line so the two meet
+   (`snapCutEnds`, reach about 1.6 km).
+5. Re-encode the tile and hand it to the map.
+
+Regions are polygons, because one box cannot separate the China side of Arunachal Pradesh from the
+Myanmar and Bhutan borders that the basemap also flags as disputed. The Arunachal region is generated by
+`scripts/make-region.mjs` as a strip on the China side of the drawn line, narrowing to nothing at both
+ends of the drawn line. Those two ends are the points where the line meets the Bhutan and Myanmar borders.
+
+## The replacement lines
+
+`fixStyle` finds every style layer that draws country lines, by source layer and filter rather than by id
+(`PROFILE.isCountryLayer`), and adds a copy after it that reads the built-in GeoJSON. The copy keeps the
+original's paint, layout and zoom range, so the border looks the same as its neighbours in light and dark
+styles.
+
+## Checking it
+
+`npm run verify:coverage` downloads real tiles over the regions at each zoom, applies the rewrite, and
+looks for gaps:
+
+* a basemap country line that ends in empty space near a region, farther than 3 screen pixels from both a
+  drawn line and another basemap line;
+* an end of a drawn line that touches no border.
+
+Zero of both at every zoom means the border has no break. Results for 0.1.0: zoom 1 to 10 report zero. Zoom 11
+reports 3 ends near the Bhutan junction (0.15 to 0.6 km from the drawn line) and zoom 12 reports one end 60 m
+from it, in Gilgit; looking at the map at those zooms shows no stub or break, so they are tile-edge pieces
+and not visible gaps. Zoom 13 and above is checked by eye only. The check does not look at whether a leftover
+basemap line runs parallel to a drawn one, so also look at the map: `examples/maplibre.html` is a page
+for that.
+
+## Changing the regions
+
+Edit `REGIONS` in `src/config.js`. The Jammu and Kashmir region is a plain box. For Arunachal Pradesh, rerun
+`node scripts/make-region.mjs [margin]`, which rewrites `src/arunachal-region.js`. Then run the coverage
+check and look at the map at zoom 3, 6, 9 and 12.
+
+
+---
+
+# Basemaps and custom schemas (basemaps.md)
+
+# Basemaps
+
+## What a basemap needs
+
+The module works with a vector basemap whose tiles have:
+
+* a layer named `boundary`;
+* country lines marked `admin_level` = 2;
+* a numeric `maritime` property (0 on land);
+* a `disputed` property (1 on disputed lines).
+
+That is the OpenMapTiles schema. CARTO, OpenFreeMap, MapTiler and Stadia all use it. Check yours by
+opening a tile in a vector tile inspector (for example maputnik.github.io, or `npm run verify:coverage
+-- --tiles URL_TEMPLATE`) and looking at the `boundary` layer.
+
+## Checking a new basemap
+
+```
+node scripts/verify-coverage.mjs --tiles "https://example.com/tiles/{z}/{x}/{y}.pbf" --zmin 1 --zmax 10
+```
+
+Zero free ends at every zoom means the cut and the drawn line meet. If a zoom range reports many free
+ends, the basemap probably does not flag its disputed lines, or flags them differently (see below).
+
+## Another schema
+
+If the layer name or properties differ, pass a profile. `PROFILE` in `src/config.js` has the three parts:
+
+* `layer`: the tile layer name;
+* `match(properties)`: true for a country line the module should cut;
+* `isCountryLayer(styleLayer)`: true for the style layers that draw country lines.
+
+`rewriteTile(bytes, z, x, y, { profile })` takes an override for the first two. `fixStyle` uses the
+default `isCountryLayer`; copy `fixStyle` into your project and swap it if your style names things
+differently.
+
+If the basemap does not flag disputed lines at all, `match` can test the two countries on each side of
+the line instead (for example `adm0_l` and `adm0_r` as CHN and IND), as long as the tile has them at the
+zoom you care about. Check the low zooms, where some basemaps drop those properties.
+
+## Raster basemaps
+
+Not supported for cutting. See the Leaflet section of the README.

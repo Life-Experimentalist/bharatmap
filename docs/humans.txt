@@ -1,0 +1,10 @@
+/* TEAM */
+Author: VKrishna04
+Site: https://vkrishna04.me
+GitHub: https://github.com/VKrishna04
+
+/* SITE */
+Project: bharatmap
+Source: https://github.com/Life-Experimentalist/bharatmap
+Package: https://www.npmjs.com/package/bharatmap
+Licence: Apache-2.0 (code), ODbL 1.0 (border data)
